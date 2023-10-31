@@ -1,0 +1,36 @@
+apiVersion: batch.tutorial.kubebuilder.io/v1
+kind: MyApp
+metadata:
+  labels:
+    app.kubernetes.io/name: myapp
+    app.kubernetes.io/instance: myapp-sample
+    app.kubernetes.io/part-of: myapp
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: myapp
+  name: myapp-sample
+spec:
+  deploymentTemplate:
+    metadata:
+      name: myapp-sample
+      namespace: default
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: myapp
+          app.kubernetes.io/instance: myapp-sample
+          app.kubernetes.io/part-of: myapp
+      template:
+        labels:
+            app.kubernetes.io/name: myapp
+            app.kubernetes.io/instance: myapp-sample
+            app.kubernetes.io/part-of: myapp
+        containers:
+          - name: container1
+            image: busybox:latest
+            command: ["sleep", "infinity"]
+            # envs:
+              # - name: MY_ENV
+                # value: "my-value"
+            config: "config1"
+            configMountPath: "/config1"
